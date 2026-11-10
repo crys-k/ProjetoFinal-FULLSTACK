@@ -1,0 +1,75 @@
+{% extends 'imobiliaria/base.html' %}
+{% block title %}Morada — imóveis para viver bem{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> UM NOVO JEITO DE MORAR</span>
+    <h1>O lugar certo<br>muda <em>tudo.</em></h1>
+    <p>Espaços que combinam com a sua vida. Encontre um lugar para chamar de seu.</p>
+    <a class="text-link" href="#imoveis">Explore nossos imóveis <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="hero-art" role="img" aria-label="Arquitetura contemporânea cercada por árvores">
+    <div class="hero-image"></div>
+    <div class="hero-note"><span class="note-icon">✳</span><span>Mais do que um endereço.<br><strong>Um lugar para pertencer.</strong></span></div>
+    <span class="hero-index">01 <span></span> 04</span>
+  </div>
+  <div class="hero-stamp"><span>SEU LUGAR</span><span>EXISTE.</span><span class="stamp-star">✳</span></div>
+</section>
+
+<section class="search-wrap" aria-label="Buscar imóveis">
+  <form class="search-bar" method="get" action="{% url 'imobiliaria:inicio' %}">
+    <label class="search-field">
+      <span class="field-label">O que você procura?</span>
+      <select name="finalidade">
+        <option value="">Comprar ou alugar</option>
+        {% for valor, rotulo in finalidades %}<option value="{{ valor }}" {% if filtros.finalidade == valor %}selected{% endif %}>{{ rotulo }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="search-field">
+      <span class="field-label">Tipo de imóvel</span>
+      <select name="tipo">
+        <option value="">Todos os tipos</option>
+        {% for valor, rotulo in tipos %}<option value="{{ valor }}" {% if filtros.tipo == valor %}selected{% endif %}>{{ rotulo }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="search-field">
+      <span class="field-label">Onde?</span>
+      <input type="text" name="cidade" placeholder="Cidade" value="{{ filtros.cidade }}">
+    </label>
+    <label class="search-field price-field">
+      <span class="field-label">Até quanto?</span>
+      <input type="number" name="preco_maximo" min="1" step="1000" placeholder="Qualquer valor" value="{{ filtros.preco_maximo }}">
+    </label>
+    <button class="search-button" type="submit" aria-label="Buscar imóveis">Buscar <span aria-hidden="true">↗</span></button>
+  </form>
+</section>
+
+<section class="listings section-wrap" id="imoveis">
+  <div class="section-heading">
+    <div><span class="eyebrow">SELECIONADOS PARA VOCÊ</span><h2>Espaços com <em>história.</em></h2></div>
+    <span class="listing-count">{{ imoveis|length }} {% if imoveis|length == 1 %}imóvel{% else %}imóveis{% endif %}</span>
+  </div>
+  {% if imoveis %}
+  <div class="property-grid">
+    {% for imovel in imoveis %}
+    <a class="property-card" href="{% url 'imobiliaria:detalhe' imovel.slug %}">
+      <div class="property-image {% if not imovel.imagem_url %}image-placeholder{% endif %}">
+        {% if imovel.imagem_url %}<img class="property-photo" src="{{ imovel.imagem_url }}" alt="{{ imovel.titulo }}">{% endif %}
+        <span class="property-tag">{{ imovel.get_finalidade_display }}</span>
+        {% if imovel.destaque %}<span class="featured-tag">✳ Em destaque</span>{% endif %}
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="property-info">
+        <div class="property-location">{{ imovel.bairro }} <span>·</span> {{ imovel.cidade }}</div>
+        <h3>{{ imovel.titulo }}</h3>
+        <div class="property-meta"><span>{{ imovel.area }} m²</span><span>{{ imovel.quartos }} quartos</span><span>{{ imovel.vagas }} vagas</span></div>
+        <div class="property-price">R$ {{ imovel.preco|floatformat:2 }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state"><span class="empty-icon">⌂</span><h3>Nenhum imóvel por aqui ainda.</h3><p>Experimente ajustar os filtros ou volte em breve para descobrir novos espaços.</p><a class="text-link" href="{% url 'imobiliaria:inicio' %}">Limpar busca <span aria-hidden="true">↗</span></a></div>
+  {% endif %}
+</section>
+{% endblock %}

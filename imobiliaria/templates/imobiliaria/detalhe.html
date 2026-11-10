@@ -1,0 +1,25 @@
+{% extends 'imobiliaria/base.html' %}
+{% block title %}{{ imovel.titulo }} — Morada{% endblock %}
+{% block content %}
+<section class="detail-page section-wrap">
+  <a class="back-link" href="{% url 'imobiliaria:inicio' %}#imoveis"><span aria-hidden="true">←</span> Voltar para imóveis</a>
+  <div class="detail-image {% if not imovel.imagem_url %}image-placeholder{% endif %}">
+    {% if imovel.imagem_url %}<img class="detail-photo" src="{{ imovel.imagem_url }}" alt="{{ imovel.titulo }}">{% endif %}
+    <span class="property-tag">{{ imovel.get_finalidade_display }}</span>
+  </div>
+  <div class="detail-content">
+    <div>
+      <span class="eyebrow">{{ imovel.bairro }} · {{ imovel.cidade }}</span>
+      <h1>{{ imovel.titulo }}</h1>
+      <p class="detail-description">{{ imovel.descricao|linebreaksbr }}</p>
+      <div class="detail-meta"><span>{{ imovel.area }} m²</span><span>{{ imovel.quartos }} quartos</span><span>{{ imovel.banheiros }} banheiros</span><span>{{ imovel.vagas }} vagas</span></div>
+    </div>
+    <aside class="contact-card">
+      <span class="field-label">INVESTIMENTO</span>
+      <strong>R$ {{ imovel.preco|floatformat:2 }}</strong>
+      <p>Gostou deste espaço? Fale com a nossa equipe e saiba mais.</p>
+      <a class="contact-button" href="mailto:contato@morada.com.br?subject=Tenho%20interesse%20em%20{{ imovel.titulo|urlencode }}">Tenho interesse <span aria-hidden="true">↗</span></a>
+    </aside>
+  </div>
+</section>
+{% endblock %}
