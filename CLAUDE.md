@@ -97,8 +97,9 @@ model que ainda não existe. Depois de alterar `models.py`, lembrar das migratio
 ## 9. Conclusão de fase
 
 Ao concluir uma fase do desenvolvimento, deixar no final da resposta uma lista
-de commits sugeridos, agrupando os arquivos que devem ser comitados juntos em
-cada commit.
+de commits sugeridos, separando em mais de um commit quando necessário (ex.:
+model e migration num commit, view e template em outro, docs em outro),
+agrupando os arquivos que devem ser comitados juntos em cada commit.
 
 - Cada commit sugerido traz: os arquivos envolvidos e a mensagem de commit.
 - Mensagem de commit segue a estrutura `[flag]: [mensagem]`.
