@@ -2,12 +2,13 @@
 
 **Pré-requisito:** nenhum (primeira fase)
 **Caso de uso:** nenhum
-**Commit:** `chore: limpa app imobiliaria para iniciar o sistema de hotel`
+**Commit:** `chore: limpa app imobiliaria para iniciar o sistema de aluguel de imoveis`
 
 ## Objetivo
 
-Zerar o app `imobiliaria` para iniciar o Sistema de Gerenciamento de Hotel sem
-resíduos da versão anterior (imobiliária e model `Funcionario` experimental).
+Zerar o app `imobiliaria` para iniciar o Sistema de Aluguel de Imóveis sem
+resíduos de experimentos anteriores (model `Funcionario` de teste e migration
+`Imovel` órfã).
 
 ## Situação encontrada
 

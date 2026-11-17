@@ -1,4 +1,4 @@
-# Fase 13 — Dashboard e acabamento
+# Fase 12 — Dashboard e acabamento
 
 **Pré-requisito:** todas as fases anteriores concluídas
 **Caso de uso:** nenhum
@@ -6,8 +6,8 @@
 
 ## Objetivo
 
-Fechar o sistema: visão geral na home, navegação coerente e revisão final contra
-as regras do projeto.
+Fechar o sistema: visão geral na home, navegação coerente e revisão final
+contra as regras do projeto.
 
 ## Ações
 
@@ -16,9 +16,8 @@ Nenhuma alteração.
 
 ### views / urls
 - `index` passa a montar o dashboard:
-  - quartos disponíveis / ocupados / em manutenção
-  - check-ins previstos para hoje
-  - reservas em andamento
+  - imóveis disponíveis / alugados / indisponíveis
+  - locações ativas
   - ocorrências pendentes
 
 ### templates
@@ -26,11 +25,11 @@ Nenhuma alteração.
 
 ### _partials
 - `_indicador.html` — card de indicador reaproveitado para cada número
-- `_nav-bar.html` — revisão dos links e da separação entre itens de funcionário e
-  de administrador
+- `_nav-bar.html` — revisão dos links e da separação entre itens de
+  funcionário e de administrador
 
 ### admin.py
-Registrar os models (`TipoQuarto`, `Quarto`, `Cliente`, `Funcionario`, `Reserva`,
+Registrar os models (`Imovel`, `Cliente`, `Funcionario`, `Locacao`,
 `Ocorrencia`) para apoio durante a apresentação.
 
 ### Revisão final contra o `CLAUDE.md`

@@ -1,7 +1,7 @@
-# Fase 3 — Gerenciar Funcionários (CU 3)
+# Fase 3 — Gerir Funcionários (CU 1)
 
 **Pré-requisito:** Fase 2 concluída
-**Caso de uso:** CU 3 — Gerenciar Funcionários (ator: Administrador)
+**Caso de uso:** CU 1 — Gerir Funcionários (ator: Administrador)
 **Commit:** `feat: implementa gerenciamento de funcionarios`
 
 ## Objetivo
@@ -14,7 +14,7 @@ credenciais de acesso ao sistema.
 ### models
 `Funcionario`
 - `usuario` — `OneToOneField(User, on_delete=models.PROTECT)`
-- `cargo` — `CharField` com `choices` (ex.: recepção, governança, administração)
+- `cargo` — `CharField` com `choices` (ex.: corretor, gerente, administração)
 - `telefone` — `CharField`
 - `ativo` — `BooleanField(default=True)`
 - `data_cadastro` — `DateTimeField(auto_now_add=True)`
