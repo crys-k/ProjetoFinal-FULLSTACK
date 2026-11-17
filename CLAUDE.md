@@ -93,3 +93,13 @@ model que ainda não existe. Depois de alterar `models.py`, lembrar das migratio
   parecer necessária, pedir aprovação do programador antes — preferência sempre
   pelo que já vem no Django.
 - `requirements.txt` só muda com aprovação.
+
+## 9. Conclusão de fase
+
+Ao concluir uma fase do desenvolvimento, deixar no final da resposta uma lista
+de commits sugeridos, agrupando os arquivos que devem ser comitados juntos em
+cada commit.
+
+- Cada commit sugerido traz: os arquivos envolvidos e a mensagem de commit.
+- Mensagem de commit segue a estrutura `[flag]: [mensagem]`.
+- Flags possíveis: `feat`, `docs`, `fix`, `chore`.
