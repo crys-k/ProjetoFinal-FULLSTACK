@@ -8,6 +8,9 @@ body {
 .nav-bar {
     background-color: #1f3b57;
     padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .nav-bar__marca {
@@ -15,6 +18,22 @@ body {
     font-size: 1.25rem;
     font-weight: bold;
     text-decoration: none;
+}
+
+.nav-bar__usuario {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-bar__saudacao,
+.nav-bar__link {
+    color: #fff;
+}
+
+.nav-bar__link {
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .conteudo {
@@ -54,4 +73,47 @@ body {
 .messages__item--debug {
     background-color: #d1ecf1;
     color: #0c5460;
+}
+
+.login-form {
+    max-width: 360px;
+    margin: 80px auto;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.login-form__titulo {
+    margin: 0 0 20px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.login-form__campo {
+    margin-bottom: 16px;
+}
+
+.login-form__label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+
+.login-form__input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-form__botao {
+    width: 100%;
+    padding: 10px;
+    background-color: #1f3b57;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }

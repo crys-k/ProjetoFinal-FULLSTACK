@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'imobiliaria/css/style.css' %}">
 </head>
 <body>
-    {% include 'imobiliaria/_partials/_nav-bar.html' %}
+    {% block nav_bar %}{% include 'imobiliaria/_partials/_nav-bar.html' %}{% endblock %}
 
     <main class="conteudo">
         {% include 'imobiliaria/_partials/_messages.html' %}

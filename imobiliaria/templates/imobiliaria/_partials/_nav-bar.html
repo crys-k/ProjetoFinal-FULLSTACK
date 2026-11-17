@@ -1,3 +1,7 @@
 <nav class="nav-bar">
     <a href="{% url 'imobiliaria:index' %}" class="nav-bar__marca">Imobiliária</a>
+    <div class="nav-bar__usuario">
+        <span class="nav-bar__saudacao">Olá, {{ user.username }}</span>
+        <a href="{% url 'imobiliaria:logout' %}" class="nav-bar__link">Sair</a>
+    </div>
 </nav>
