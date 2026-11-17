@@ -101,6 +101,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Authentication
+# https://docs.djangoproject.com/en/6.1/ref/settings/#login-url
+
+LOGIN_URL = 'imobiliaria:login'
+LOGIN_REDIRECT_URL = 'imobiliaria:index'
+LOGOUT_REDIRECT_URL = 'imobiliaria:login'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
