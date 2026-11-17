@@ -1,0 +1,16 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}{% if funcionario %}Editar funcionário{% else %}Novo funcionário{% endif %} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <h1>{% if funcionario %}Editar funcionário{% else %}Novo funcionário{% endif %}</h1>
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+        {% if usuario_form %}
+            {{ usuario_form.as_p }}
+        {% endif %}
+        {{ funcionario_form.as_p }}
+        <button type="submit" class="botao">Salvar</button>
+    </form>
+{% endblock %}

@@ -1,7 +1,12 @@
 <nav class="nav-bar">
-    <a href="{% url 'imobiliaria:index' %}" class="nav-bar__marca">Imobiliária</a>
+    <div class="nav-bar__principal">
+        <a href="{% url 'imobiliaria:index' %}" class="nav-bar__marca">Imobiliária</a>
+        {% if user.is_staff %}
+            <a href="{% url 'imobiliaria:funcionario_lista' %}" class="nav-bar__link">Funcionários</a>
+        {% endif %}
+    </div>
     <div class="nav-bar__usuario">
-        <span class="nav-bar__saudacao">Olá, {{ user.username }}</span>
+        <span class="nav-bar__saudacao">Bem-vindo, {{ user.first_name }}</span>
         <a href="{% url 'imobiliaria:logout' %}" class="nav-bar__link">Sair</a>
     </div>
 </nav>

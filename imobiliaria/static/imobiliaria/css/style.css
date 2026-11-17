@@ -20,6 +20,12 @@ body {
     text-decoration: none;
 }
 
+.nav-bar__principal {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
 .nav-bar__usuario {
     display: flex;
     align-items: center;
@@ -116,4 +122,105 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.pagina-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.botao {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #1f3b57;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.botao--secundario {
+    background-color: #6c757d;
+}
+
+.botao--perigo {
+    background-color: #a94442;
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.tabela th,
+.tabela td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.tabela__linha--inativo {
+    color: #888;
+    font-style: italic;
+}
+
+.tabela__acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.tabela__form-acao {
+    margin: 0;
+    display: inline;
+}
+
+.formulario {
+    max-width: 480px;
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.formulario p {
+    margin-bottom: 16px;
+}
+
+.formulario label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formulario .helptext {
+    display: block;
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.formulario ul {
+    margin: -12px 0 16px;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.formulario ul li {
+    margin-bottom: 2px;
 }

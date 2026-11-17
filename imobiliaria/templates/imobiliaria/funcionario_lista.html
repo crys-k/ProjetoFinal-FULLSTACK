@@ -1,0 +1,32 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Funcionários | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>Funcionários</h1>
+        <a href="{% url 'imobiliaria:funcionario_novo' %}" class="botao">Novo funcionário</a>
+    </div>
+
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Usuário</th>
+                <th>Cargo</th>
+                <th>Telefone</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for funcionario in funcionarios %}
+                {% include 'imobiliaria/_partials/_funcionario-linha.html' %}
+            {% empty %}
+                <tr>
+                    <td colspan="6">Nenhum funcionário cadastrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,16 @@
+<tr class="tabela__linha{% if not funcionario.ativo %} tabela__linha--inativo{% endif %}">
+    <td>{{ funcionario }}</td>
+    <td>{{ funcionario.usuario.username }}</td>
+    <td>{{ funcionario.get_cargo_display }}</td>
+    <td>{{ funcionario.telefone }}</td>
+    <td>{% if funcionario.ativo %}Ativo{% else %}Inativo{% endif %}</td>
+    <td class="tabela__acoes">
+        <a href="{% url 'imobiliaria:funcionario_editar' funcionario.id %}" class="botao botao--secundario">Editar</a>
+        {% if funcionario.ativo %}
+            <form method="post" action="{% url 'imobiliaria:funcionario_desativar' funcionario.id %}" class="tabela__form-acao">
+                {% csrf_token %}
+                <button type="submit" class="botao botao--perigo">Desativar</button>
+            </form>
+        {% endif %}
+    </td>
+</tr>
