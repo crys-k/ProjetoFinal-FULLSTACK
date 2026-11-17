@@ -1,6 +1,6 @@
 # Regras de geração de código — ProjetoFinal (Django)
 
-Projeto: Sistema de Gerenciamento de Hotel (ver `.claude/docs/gerenciamento-hotel-descricao.md`).
+Projeto: Sistema de Aluguel de Imóveis (Imobiliária) (ver `.claude/docs/gerenciamento-imobiliaria-descricao.md`).
 App principal: `imobiliaria`. Projeto: `ProjetoFinal`. Django 6.1.2 + SQLite.
 
 ## 1. Escopo da linguagem usada
@@ -61,8 +61,8 @@ model que ainda não existe. Depois de alterar `models.py`, lembrar das migratio
 
 ## 5. Nomenclatura
 
-- Models: singular, PascalCase (`Cliente`, `Quarto`, `Reserva`).
-- Campos, funções e variáveis: `snake_case` em português (`data_entrada`, `quarto_lista`).
+- Models: singular, PascalCase (`Cliente`, `Imovel`, `Locacao`).
+- Campos, funções e variáveis: `snake_case` em português (`data_inicio`, `imovel_lista`).
 - Forms: PascalCase terminando em `Form` (`ClienteForm`) — não `clienteForm`.
 - URLs nomeadas por recurso + ação: `cliente_lista`, `cliente_novo`, `cliente_editar`.
 - Sempre usar `app_name = 'imobiliaria'` e referenciar como `{% url 'imobiliaria:cliente_lista' %}`.
