@@ -57,6 +57,10 @@ class Imovel(models.Model):
     def pode_bloquear(self):
         return not self.locacao_set.filter(status='ativa').exists()
 
+    @property
+    def ocorrencias_pendentes(self):
+        return self.ocorrencias.filter(resolvida=False).count()
+
     def bloquear(self, motivo):
         if not self.pode_bloquear:
             return
@@ -136,3 +140,23 @@ class Locacao(models.Model):
         self.save()
         self.imovel.status = 'disponivel'
         self.imovel.save()
+
+
+class Ocorrencia(models.Model):
+    imovel = models.ForeignKey(Imovel, on_delete=models.CASCADE, related_name='ocorrencias')
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.PROTECT, null=True)
+    descricao = models.TextField()
+    resolvida = models.BooleanField(default=False)
+    registrada_em = models.DateTimeField(auto_now_add=True)
+    resolvida_em = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-registrada_em']
+
+    def __str__(self):
+        return f'{self.imovel} - {self.descricao[:50]}'
+
+    def resolver(self):
+        self.resolvida = True
+        self.resolvida_em = timezone.now()
+        self.save()
