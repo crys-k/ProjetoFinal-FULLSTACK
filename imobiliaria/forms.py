@@ -43,6 +43,14 @@ class ImovelForm(forms.ModelForm):
         return valor_aluguel
 
 
+class PesquisaImovelForm(forms.Form):
+    endereco = forms.CharField(required=False, label='Endereço')
+    tipo = forms.ChoiceField(choices=[('', 'Todos os tipos')] + Imovel.TIPO_CHOICES, required=False, label='Tipo')
+    quartos_min = forms.IntegerField(required=False, label='Quartos (mínimo)')
+    valor_min = forms.DecimalField(required=False, label='Valor mínimo')
+    valor_max = forms.DecimalField(required=False, label='Valor máximo')
+
+
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente

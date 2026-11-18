@@ -4,7 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ClienteForm, FuncionarioForm, ImovelForm, LocacaoForm, OcorrenciaForm, UsuarioForm
+from .forms import (
+    ClienteForm,
+    FuncionarioForm,
+    ImovelForm,
+    LocacaoForm,
+    OcorrenciaForm,
+    PesquisaImovelForm,
+    UsuarioForm,
+)
 from .models import Cliente, Funcionario, Imovel, Locacao, Ocorrencia
 
 
@@ -177,6 +185,39 @@ def imovel_desbloquear(request, id):
         imovel.desbloquear()
         messages.success(request, 'Imóvel desbloqueado com sucesso.')
     return redirect('imobiliaria:imovel_lista')
+
+
+@login_required
+def imovel_pesquisa(request):
+    form = PesquisaImovelForm(request.GET)
+    imoveis = Imovel.objects.filter(status='disponivel', ativo=True)
+
+    if form.is_valid():
+        endereco = form.cleaned_data['endereco']
+        tipo = form.cleaned_data['tipo']
+        quartos_min = form.cleaned_data['quartos_min']
+        valor_min = form.cleaned_data['valor_min']
+        valor_max = form.cleaned_data['valor_max']
+
+        if endereco:
+            imoveis = imoveis.filter(endereco__icontains=endereco)
+        if tipo:
+            imoveis = imoveis.filter(tipo=tipo)
+        if quartos_min:
+            imoveis = imoveis.filter(quartos__gte=quartos_min)
+        if valor_min:
+            imoveis = imoveis.filter(valor_aluguel__gte=valor_min)
+        if valor_max:
+            imoveis = imoveis.filter(valor_aluguel__lte=valor_max)
+
+    contexto = {'form': form, 'imoveis': imoveis}
+    return render(request, 'imobiliaria/imovel_pesquisa.html', contexto)
+
+
+@login_required
+def imovel_detalhe(request, id):
+    imovel = get_object_or_404(Imovel, pk=id)
+    return render(request, 'imobiliaria/imovel_detalhe.html', {'imovel': imovel})
 
 
 @login_required
