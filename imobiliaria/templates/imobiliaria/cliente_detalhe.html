@@ -1,0 +1,23 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}{{ cliente }} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>{{ cliente.nome }}</h1>
+        <a href="{% url 'imobiliaria:cliente_editar' cliente.id %}" class="botao botao--secundario">Editar</a>
+    </div>
+
+    <dl>
+        <dt>CPF/CNPJ</dt>
+        <dd>{{ cliente.cpf_cnpj }}</dd>
+        <dt>Telefone</dt>
+        <dd>{{ cliente.telefone }}</dd>
+        <dt>Endereço</dt>
+        <dd>{{ cliente.endereco }}</dd>
+        <dt>Cliente desde</dt>
+        <dd>{{ cliente.data_cadastro }}</dd>
+    </dl>
+
+    <a href="{% url 'imobiliaria:cliente_lista' %}" class="botao botao--secundario">Voltar</a>
+{% endblock %}

@@ -1,0 +1,8 @@
+<tr class="tabela__linha">
+    <td><a href="{% url 'imobiliaria:cliente_detalhe' cliente.id %}">{{ cliente.nome }}</a></td>
+    <td>{{ cliente.cpf_cnpj }}</td>
+    <td>{{ cliente.telefone }}</td>
+    <td class="tabela__acoes">
+        <a href="{% url 'imobiliaria:cliente_editar' cliente.id %}" class="botao botao--secundario">Editar</a>
+    </td>
+</tr>

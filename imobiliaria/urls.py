@@ -16,4 +16,8 @@ urlpatterns = [
     path('imoveis/novo/', views.imovel_novo, name='imovel_novo'),
     path('imoveis/<int:id>/editar/', views.imovel_editar, name='imovel_editar'),
     path('imoveis/<int:id>/excluir/', views.imovel_excluir, name='imovel_excluir'),
+    path('clientes/', views.cliente_lista, name='cliente_lista'),
+    path('clientes/novo/', views.cliente_novo, name='cliente_novo'),
+    path('clientes/<int:id>/', views.cliente_detalhe, name='cliente_detalhe'),
+    path('clientes/<int:id>/editar/', views.cliente_editar, name='cliente_editar'),
 ]

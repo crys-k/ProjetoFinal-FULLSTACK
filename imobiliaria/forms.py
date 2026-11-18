@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.safestring import mark_safe
 
-from .models import Funcionario, Imovel
+from .models import Cliente, Funcionario, Imovel
 
 
 class UsuarioForm(UserCreationForm):
@@ -40,3 +40,25 @@ class ImovelForm(forms.ModelForm):
         if valor_aluguel <= 0:
             raise forms.ValidationError('O valor do aluguel deve ser maior que zero.')
         return valor_aluguel
+
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['nome', 'cpf_cnpj', 'telefone', 'endereco']
+        labels = {'cpf_cnpj': 'CPF/CNPJ'}
+
+    def clean_cpf_cnpj(self):
+        cpf_cnpj = self.cleaned_data['cpf_cnpj']
+        somente_digitos = ''.join(caractere for caractere in cpf_cnpj if caractere.isdigit())
+
+        if len(somente_digitos) not in (11, 14):
+            raise forms.ValidationError('Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.')
+
+        clientes_existentes = Cliente.objects.filter(cpf_cnpj=somente_digitos)
+        if self.instance.pk:
+            clientes_existentes = clientes_existentes.exclude(pk=self.instance.pk)
+        if clientes_existentes.exists():
+            raise forms.ValidationError('Já existe um cliente cadastrado com este CPF/CNPJ.')
+
+        return somente_digitos

@@ -1,10 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import FuncionarioForm, ImovelForm, UsuarioForm
-from .models import Funcionario, Imovel
+from .forms import ClienteForm, FuncionarioForm, ImovelForm, UsuarioForm
+from .models import Cliente, Funcionario, Imovel
 
 
 def login_view(request):
@@ -148,3 +149,46 @@ def imovel_excluir(request, id):
         imovel.save()
         messages.success(request, 'Imóvel excluído com sucesso.')
     return redirect('imobiliaria:imovel_lista')
+
+
+@login_required
+def cliente_lista(request):
+    clientes = Cliente.objects.all()
+    busca = request.GET.get('busca')
+    if busca:
+        clientes = clientes.filter(Q(nome__icontains=busca) | Q(cpf_cnpj__icontains=busca))
+    contexto = {'clientes': clientes, 'busca': busca}
+    return render(request, 'imobiliaria/cliente_lista.html', contexto)
+
+
+@login_required
+def cliente_novo(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cliente cadastrado com sucesso.')
+            return redirect('imobiliaria:cliente_lista')
+    else:
+        form = ClienteForm()
+    return render(request, 'imobiliaria/cliente_form.html', {'form': form})
+
+
+@login_required
+def cliente_editar(request, id):
+    cliente = get_object_or_404(Cliente, pk=id)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Cliente atualizado com sucesso.')
+            return redirect('imobiliaria:cliente_lista')
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'imobiliaria/cliente_form.html', {'form': form, 'cliente': cliente})
+
+
+@login_required
+def cliente_detalhe(request, id):
+    cliente = get_object_or_404(Cliente, pk=id)
+    return render(request, 'imobiliaria/cliente_detalhe.html', {'cliente': cliente})

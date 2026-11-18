@@ -1,0 +1,16 @@
+{% for campo in form %}
+    <p>
+        {{ campo.label_tag }}
+        {{ campo }}
+        {% if campo.help_text %}
+            <span class="helptext">{{ campo.help_text }}</span>
+        {% endif %}
+        {% if campo.errors %}
+            <ul>
+                {% for erro in campo.errors %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </p>
+{% endfor %}

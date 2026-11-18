@@ -1,0 +1,32 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Clientes | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>Clientes</h1>
+        <a href="{% url 'imobiliaria:cliente_novo' %}" class="botao">Novo cliente</a>
+    </div>
+
+    {% include 'imobiliaria/_partials/_busca-cliente.html' %}
+
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF/CNPJ</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                {% include 'imobiliaria/_partials/_cliente-linha.html' %}
+            {% empty %}
+                <tr>
+                    <td colspan="4">Nenhum cliente encontrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
