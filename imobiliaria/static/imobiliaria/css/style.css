@@ -313,6 +313,38 @@ body {
     margin-bottom: 16px;
 }
 
+.imovel-detalhe {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.imovel-detalhe__foto {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    background-color: #e0e0e0;
+}
+
+.imovel-detalhe__info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 20px;
+}
+
+.imovel-detalhe__info dt {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.imovel-detalhe__info dd {
+    margin: 2px 0 0;
+    font-size: 1.05rem;
+}
+
 .relatorio-resumo {
     display: flex;
     gap: 16px;
