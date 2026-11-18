@@ -214,11 +214,12 @@ body {
 }
 
 .formulario ul {
-    margin: -12px 0 16px;
+    margin: 4px 0 0;
     padding: 0;
     list-style: none;
     font-size: 0.8rem;
-    color: #999;
+    color: #721c24;
+    font-weight: bold;
 }
 
 .formulario ul li {

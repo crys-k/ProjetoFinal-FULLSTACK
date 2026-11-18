@@ -8,9 +8,9 @@
     <form method="post" class="formulario">
         {% csrf_token %}
         {% if usuario_form %}
-            {{ usuario_form.as_p }}
+            {% include 'imobiliaria/_partials/_form-campos.html' with form=usuario_form %}
         {% endif %}
-        {{ funcionario_form.as_p }}
+        {% include 'imobiliaria/_partials/_form-campos.html' with form=funcionario_form %}
         <button type="submit" class="botao">Salvar</button>
     </form>
 {% endblock %}
