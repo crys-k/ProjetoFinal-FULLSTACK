@@ -27,4 +27,7 @@ urlpatterns = [
     path('locacoes/<int:id>/', views.locacao_detalhe, name='locacao_detalhe'),
     path('locacoes/<int:id>/finalizar/', views.locacao_finalizar, name='locacao_finalizar'),
     path('locacoes/<int:id>/cancelar/', views.locacao_cancelar, name='locacao_cancelar'),
+    path('ocorrencias/', views.ocorrencia_lista, name='ocorrencia_lista'),
+    path('ocorrencias/nova/', views.ocorrencia_nova, name='ocorrencia_nova'),
+    path('ocorrencias/<int:id>/resolver/', views.ocorrencia_resolver, name='ocorrencia_resolver'),
 ]

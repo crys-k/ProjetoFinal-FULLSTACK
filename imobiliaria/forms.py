@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
-from .models import Cliente, Funcionario, Imovel, Locacao
+from .models import Cliente, Funcionario, Imovel, Locacao, Ocorrencia
 
 
 class UsuarioForm(UserCreationForm):
@@ -89,3 +89,13 @@ class LocacaoForm(forms.ModelForm):
         if data_inicio and data_fim_prevista and data_fim_prevista <= data_inicio:
             raise forms.ValidationError('A data de fim prevista deve ser posterior à data de início.')
         return cleaned_data
+
+
+class OcorrenciaForm(forms.ModelForm):
+    class Meta:
+        model = Ocorrencia
+        fields = ['imovel', 'descricao']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['imovel'].queryset = Imovel.objects.filter(ativo=True)

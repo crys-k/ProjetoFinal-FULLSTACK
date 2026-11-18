@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ClienteForm, FuncionarioForm, ImovelForm, LocacaoForm, UsuarioForm
-from .models import Cliente, Funcionario, Imovel, Locacao
+from .forms import ClienteForm, FuncionarioForm, ImovelForm, LocacaoForm, OcorrenciaForm, UsuarioForm
+from .models import Cliente, Funcionario, Imovel, Locacao, Ocorrencia
 
 
 def login_view(request):
@@ -288,3 +288,47 @@ def locacao_cancelar(request, id):
         messages.success(request, 'Locação cancelada com sucesso.')
         return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
     return render(request, 'imobiliaria/locacao_confirmar_cancelamento.html', {'locacao': locacao})
+
+
+@login_required
+def ocorrencia_lista(request):
+    ocorrencias = Ocorrencia.objects.all()
+    imovel_id = request.GET.get('imovel')
+    status = request.GET.get('status')
+    if imovel_id:
+        ocorrencias = ocorrencias.filter(imovel_id=imovel_id)
+    if status == 'pendente':
+        ocorrencias = ocorrencias.filter(resolvida=False)
+    elif status == 'resolvida':
+        ocorrencias = ocorrencias.filter(resolvida=True)
+    contexto = {
+        'ocorrencias': ocorrencias,
+        'imoveis': Imovel.objects.filter(ativo=True),
+        'imovel_selecionado': imovel_id,
+        'status_selecionado': status,
+    }
+    return render(request, 'imobiliaria/ocorrencia_lista.html', contexto)
+
+
+@login_required
+def ocorrencia_nova(request):
+    if request.method == 'POST':
+        form = OcorrenciaForm(request.POST)
+        if form.is_valid():
+            ocorrencia = form.save(commit=False)
+            ocorrencia.funcionario = Funcionario.objects.filter(usuario=request.user).first()
+            ocorrencia.save()
+            messages.success(request, 'Ocorrência registrada com sucesso.')
+            return redirect('imobiliaria:ocorrencia_lista')
+    else:
+        form = OcorrenciaForm()
+    return render(request, 'imobiliaria/ocorrencia_form.html', {'form': form})
+
+
+@login_required
+def ocorrencia_resolver(request, id):
+    ocorrencia = get_object_or_404(Ocorrencia, pk=id)
+    if request.method == 'POST':
+        ocorrencia.resolver()
+        messages.success(request, 'Ocorrência marcada como resolvida.')
+    return redirect('imobiliaria:ocorrencia_lista')
