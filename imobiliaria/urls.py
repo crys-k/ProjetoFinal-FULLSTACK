@@ -23,4 +23,6 @@ urlpatterns = [
     path('locacoes/', views.locacao_lista, name='locacao_lista'),
     path('locacoes/nova/', views.locacao_nova, name='locacao_nova'),
     path('locacoes/<int:id>/', views.locacao_detalhe, name='locacao_detalhe'),
+    path('locacoes/<int:id>/finalizar/', views.locacao_finalizar, name='locacao_finalizar'),
+    path('locacoes/<int:id>/cancelar/', views.locacao_cancelar, name='locacao_cancelar'),
 ]

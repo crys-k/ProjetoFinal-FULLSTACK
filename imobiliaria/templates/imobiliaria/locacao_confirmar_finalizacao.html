@@ -1,0 +1,26 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Finalizar locação #{{ locacao.id }} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <h1>Finalizar locação #{{ locacao.id }}</h1>
+
+    <p>Tem certeza que deseja finalizar esta locação? O imóvel ficará disponível novamente.</p>
+
+    <dl>
+        <dt>Cliente</dt>
+        <dd>{{ locacao.cliente.nome }}</dd>
+        <dt>Imóvel</dt>
+        <dd>{{ locacao.imovel.endereco }}</dd>
+        <dt>Data de início</dt>
+        <dd>{{ locacao.data_inicio }}</dd>
+        <dt>Data de fim prevista</dt>
+        <dd>{{ locacao.data_fim_prevista }}</dd>
+    </dl>
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+        <button type="submit" class="botao">Confirmar finalização</button>
+        <a href="{% url 'imobiliaria:locacao_detalhe' locacao.id %}" class="botao botao--secundario">Cancelar</a>
+    </form>
+{% endblock %}

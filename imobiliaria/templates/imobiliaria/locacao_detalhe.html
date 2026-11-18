@@ -20,9 +20,17 @@
         <dd>{{ locacao.data_fim_real|default:'—' }}</dd>
         <dt>Status</dt>
         <dd>{{ locacao.get_status_display }}</dd>
+        <dt>Motivo do cancelamento</dt>
+        <dd>{{ locacao.motivo_cancelamento|default:'—' }}</dd>
         <dt>Criada em</dt>
         <dd>{{ locacao.criada_em }}</dd>
     </dl>
 
     <a href="{% url 'imobiliaria:locacao_lista' %}" class="botao botao--secundario">Voltar</a>
+    {% if locacao.pode_finalizar %}
+        <a href="{% url 'imobiliaria:locacao_finalizar' locacao.id %}" class="botao">Finalizar</a>
+    {% endif %}
+    {% if locacao.pode_cancelar %}
+        <a href="{% url 'imobiliaria:locacao_cancelar' locacao.id %}" class="botao botao--perigo">Cancelar</a>
+    {% endif %}
 {% endblock %}

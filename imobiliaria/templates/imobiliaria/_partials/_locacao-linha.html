@@ -6,5 +6,11 @@
     <td>{{ locacao.get_status_display }}</td>
     <td class="tabela__acoes">
         <a href="{% url 'imobiliaria:locacao_detalhe' locacao.id %}" class="botao botao--secundario">Detalhes</a>
+        {% if locacao.pode_finalizar %}
+            <a href="{% url 'imobiliaria:locacao_finalizar' locacao.id %}" class="botao">Finalizar</a>
+        {% endif %}
+        {% if locacao.pode_cancelar %}
+            <a href="{% url 'imobiliaria:locacao_cancelar' locacao.id %}" class="botao botao--perigo">Cancelar</a>
+        {% endif %}
     </td>
 </tr>

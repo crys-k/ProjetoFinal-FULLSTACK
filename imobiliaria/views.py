@@ -233,3 +233,30 @@ def locacao_nova(request):
 def locacao_detalhe(request, id):
     locacao = get_object_or_404(Locacao, pk=id)
     return render(request, 'imobiliaria/locacao_detalhe.html', {'locacao': locacao})
+
+
+@login_required
+def locacao_finalizar(request, id):
+    locacao = get_object_or_404(Locacao, pk=id)
+    if not locacao.pode_finalizar:
+        messages.error(request, 'Esta locação não pode ser finalizada.')
+        return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
+    if request.method == 'POST':
+        locacao.finalizar()
+        messages.success(request, 'Locação finalizada com sucesso.')
+        return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
+    return render(request, 'imobiliaria/locacao_confirmar_finalizacao.html', {'locacao': locacao})
+
+
+@login_required
+def locacao_cancelar(request, id):
+    locacao = get_object_or_404(Locacao, pk=id)
+    if not locacao.pode_cancelar:
+        messages.error(request, 'Esta locação não pode ser cancelada.')
+        return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
+    if request.method == 'POST':
+        motivo = request.POST.get('motivo_cancelamento', '')
+        locacao.cancelar(motivo)
+        messages.success(request, 'Locação cancelada com sucesso.')
+        return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
+    return render(request, 'imobiliaria/locacao_confirmar_cancelamento.html', {'locacao': locacao})
