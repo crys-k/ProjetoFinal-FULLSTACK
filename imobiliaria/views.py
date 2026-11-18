@@ -332,3 +332,41 @@ def ocorrencia_resolver(request, id):
         ocorrencia.resolver()
         messages.success(request, 'Ocorrência marcada como resolvida.')
     return redirect('imobiliaria:ocorrencia_lista')
+
+
+@login_required
+def relatorio_locacoes(request):
+    if not request.user.is_staff:
+        messages.error(request, 'Acesso restrito ao administrador.')
+        return redirect('imobiliaria:index')
+
+    locacoes = Locacao.objects.all()
+    data_inicio_de = request.GET.get('data_inicio_de')
+    data_inicio_ate = request.GET.get('data_inicio_ate')
+    tipo = request.GET.get('tipo')
+    status = request.GET.get('status')
+
+    if data_inicio_de:
+        locacoes = locacoes.filter(data_inicio__gte=data_inicio_de)
+    if data_inicio_ate:
+        locacoes = locacoes.filter(data_inicio__lte=data_inicio_ate)
+    if tipo:
+        locacoes = locacoes.filter(imovel__tipo=tipo)
+    if status:
+        locacoes = locacoes.filter(status=status)
+
+    locacoes = list(locacoes)
+    valor_total = sum(locacao.imovel.valor_aluguel for locacao in locacoes)
+
+    contexto = {
+        'locacoes': locacoes,
+        'total_locacoes': len(locacoes),
+        'valor_total': valor_total,
+        'data_inicio_de': data_inicio_de,
+        'data_inicio_ate': data_inicio_ate,
+        'tipo_opcoes': Imovel.TIPO_CHOICES,
+        'tipo_selecionado': tipo,
+        'status_opcoes': Locacao.STATUS_CHOICES,
+        'status_selecionado': status,
+    }
+    return render(request, 'imobiliaria/relatorio_locacoes.html', contexto)

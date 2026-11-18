@@ -30,4 +30,5 @@ urlpatterns = [
     path('ocorrencias/', views.ocorrencia_lista, name='ocorrencia_lista'),
     path('ocorrencias/nova/', views.ocorrencia_nova, name='ocorrencia_nova'),
     path('ocorrencias/<int:id>/resolver/', views.ocorrencia_resolver, name='ocorrencia_resolver'),
+    path('relatorios/', views.relatorio_locacoes, name='relatorio_locacoes'),
 ]
