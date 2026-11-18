@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
-from .models import Cliente, Funcionario, Imovel, Locacao, Ocorrencia
+from .models import Cliente, FotoImovel, Funcionario, Imovel, Locacao, Ocorrencia
 
 
 class UsuarioForm(UserCreationForm):
@@ -34,7 +34,7 @@ class FuncionarioForm(forms.ModelForm):
 class ImovelForm(forms.ModelForm):
     class Meta:
         model = Imovel
-        fields = ['endereco', 'tipo', 'quartos', 'metragem', 'valor_aluguel', 'foto']
+        fields = ['endereco', 'tipo', 'quartos', 'metragem', 'valor_aluguel']
 
     def clean_valor_aluguel(self):
         valor_aluguel = self.cleaned_data['valor_aluguel']
@@ -49,6 +49,19 @@ class PesquisaImovelForm(forms.Form):
     quartos_min = forms.IntegerField(required=False, label='Quartos (mínimo)')
     valor_min = forms.DecimalField(required=False, label='Valor mínimo')
     valor_max = forms.DecimalField(required=False, label='Valor máximo')
+
+
+class FotoImovelForm(forms.ModelForm):
+    class Meta:
+        model = FotoImovel
+        fields = ['imagem']
+        labels = {'imagem': 'Foto'}
+
+    def clean_imagem(self):
+        imagem = self.cleaned_data['imagem']
+        if imagem.size > 5 * 1024 * 1024:
+            raise forms.ValidationError('A imagem deve ter no máximo 5 MB.')
+        return imagem
 
 
 class ClienteForm(forms.ModelForm):

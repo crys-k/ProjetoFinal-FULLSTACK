@@ -169,6 +169,12 @@ a:hover {
     border-bottom: 1px solid var(--borda);
 }
 
+.pagina-cabecalho__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+}
+
 .conteudo > .botao + .botao {
     margin-left: var(--e-2);
 }
@@ -651,6 +657,31 @@ a:hover {
     object-fit: cover;
     background-color: var(--superficie-alt);
     border-bottom: 1px solid var(--borda);
+}
+
+.imovel-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--e-3);
+    padding: var(--e-4);
+    border-bottom: 1px solid var(--borda);
+}
+
+.imovel-galeria__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--e-2);
+    margin: 0;
+}
+
+.imovel-galeria__foto {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background-color: var(--superficie-alt);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-p);
 }
 
 .imovel-detalhe__info {

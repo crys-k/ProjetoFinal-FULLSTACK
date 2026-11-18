@@ -1,0 +1,15 @@
+{% if imovel.fotos.all %}
+    <div class="imovel-galeria">
+        {% for foto in imovel.fotos.all %}
+            <figure class="imovel-galeria__item">
+                <img src="{{ foto.imagem.url }}" alt="{{ imovel.endereco }}" class="imovel-galeria__foto">
+                <form method="post" action="{% url 'imobiliaria:imovel_foto_excluir' foto.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="botao botao--perigo">Remover</button>
+                </form>
+            </figure>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="imovel-detalhe__foto imovel-detalhe__foto--placeholder"></div>
+{% endif %}

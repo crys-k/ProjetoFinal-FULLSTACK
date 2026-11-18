@@ -1,0 +1,18 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Nova foto | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>Nova foto</h1>
+        <a href="{% url 'imobiliaria:imovel_detalhe' imovel.id %}" class="botao botao--secundario">Voltar ao imóvel</a>
+    </div>
+
+    <p>{{ imovel.endereco }}</p>
+
+    <form method="post" enctype="multipart/form-data" class="formulario">
+        {% csrf_token %}
+        {% include 'imobiliaria/_partials/_form-campos.html' with form=form %}
+        <button type="submit" class="botao">Salvar</button>
+    </form>
+{% endblock %}

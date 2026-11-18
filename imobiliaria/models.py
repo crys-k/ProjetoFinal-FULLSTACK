@@ -41,7 +41,6 @@ class Imovel(models.Model):
     quartos = models.PositiveSmallIntegerField()
     metragem = models.DecimalField(max_digits=6, decimal_places=2)
     valor_aluguel = models.DecimalField(max_digits=10, decimal_places=2)
-    foto = models.CharField(max_length=255, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='disponivel')
     motivo_bloqueio = models.CharField(max_length=255, blank=True)
     ativo = models.BooleanField(default=True)
@@ -61,6 +60,10 @@ class Imovel(models.Model):
     def ocorrencias_pendentes(self):
         return self.ocorrencias.filter(resolvida=False).count()
 
+    @property
+    def foto_principal(self):
+        return self.fotos.first()
+
     def bloquear(self, motivo):
         if not self.pode_bloquear:
             return
@@ -72,6 +75,18 @@ class Imovel(models.Model):
         self.status = 'disponivel'
         self.motivo_bloqueio = ''
         self.save()
+
+
+class FotoImovel(models.Model):
+    imovel = models.ForeignKey(Imovel, on_delete=models.CASCADE, related_name='fotos')
+    imagem = models.ImageField(upload_to='imoveis/')
+    enviada_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['enviada_em']
+
+    def __str__(self):
+        return f'Foto de {self.imovel.endereco}'
 
 
 class Cliente(models.Model):

@@ -1,7 +1,6 @@
-{% load static %}
 <div class="imovel-card">
-    {% if imovel.foto %}
-        <img src="{% static 'imobiliaria/img/imoveis/' %}{{ imovel.foto }}" alt="{{ imovel.endereco }}" class="imovel-card__foto">
+    {% if imovel.foto_principal %}
+        <img src="{{ imovel.foto_principal.imagem.url }}" alt="{{ imovel.endereco }}" class="imovel-card__foto">
     {% else %}
         <div class="imovel-card__foto imovel-card__foto--placeholder"></div>
     {% endif %}

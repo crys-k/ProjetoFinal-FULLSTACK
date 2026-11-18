@@ -3,7 +3,12 @@
 {% block title %}{% if imovel %}Editar imóvel{% else %}Novo imóvel{% endif %} | Imobiliária{% endblock %}
 
 {% block conteudo %}
-    <h1>{% if imovel %}Editar imóvel{% else %}Novo imóvel{% endif %}</h1>
+    <div class="pagina-cabecalho">
+        <h1>{% if imovel %}Editar imóvel{% else %}Novo imóvel{% endif %}</h1>
+        {% if imovel %}
+            <a href="{% url 'imobiliaria:imovel_foto_adicionar' imovel.id %}" class="botao botao--sucesso">Nova foto</a>
+        {% endif %}
+    </div>
 
     <form method="post" class="formulario">
         {% csrf_token %}

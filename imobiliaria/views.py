@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import (
     ClienteForm,
+    FotoImovelForm,
     FuncionarioForm,
     ImovelForm,
     LocacaoForm,
@@ -13,7 +14,7 @@ from .forms import (
     PesquisaImovelForm,
     UsuarioForm,
 )
-from .models import Cliente, Funcionario, Imovel, Locacao, Ocorrencia
+from .models import Cliente, FotoImovel, Funcionario, Imovel, Locacao, Ocorrencia
 
 
 def login_view(request):
@@ -134,9 +135,9 @@ def imovel_novo(request):
     if request.method == 'POST':
         form = ImovelForm(request.POST)
         if form.is_valid():
-            form.save()
+            imovel = form.save()
             messages.success(request, 'Imóvel cadastrado com sucesso.')
-            return redirect('imobiliaria:imovel_lista')
+            return redirect('imobiliaria:imovel_detalhe', id=imovel.id)
     else:
         form = ImovelForm()
     return render(request, 'imobiliaria/imovel_form.html', {'form': form})
@@ -226,6 +227,34 @@ def imovel_pesquisa(request):
 def imovel_detalhe(request, id):
     imovel = get_object_or_404(Imovel, pk=id)
     return render(request, 'imobiliaria/imovel_detalhe.html', {'imovel': imovel})
+
+
+@login_required
+def imovel_foto_adicionar(request, id):
+    imovel = get_object_or_404(Imovel, pk=id)
+    if request.method == 'POST':
+        form = FotoImovelForm(request.POST, request.FILES)
+        if form.is_valid():
+            foto = form.save(commit=False)
+            foto.imovel = imovel
+            foto.save()
+            messages.success(request, 'Foto adicionada com sucesso.')
+            return redirect('imobiliaria:imovel_detalhe', id=imovel.id)
+    else:
+        form = FotoImovelForm()
+    contexto = {'form': form, 'imovel': imovel}
+    return render(request, 'imobiliaria/imovel_foto_form.html', contexto)
+
+
+@login_required
+def imovel_foto_excluir(request, id):
+    foto = get_object_or_404(FotoImovel, pk=id)
+    imovel_id = foto.imovel_id
+    if request.method == 'POST':
+        foto.imagem.delete(save=False)
+        foto.delete()
+        messages.success(request, 'Foto removida com sucesso.')
+    return redirect('imobiliaria:imovel_detalhe', id=imovel_id)
 
 
 @login_required
