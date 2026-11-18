@@ -35,7 +35,15 @@ def logout_view(request):
 
 @login_required
 def index(request):
-    return render(request, 'imobiliaria/index.html')
+    imoveis = Imovel.objects.filter(ativo=True)
+    contexto = {
+        'imoveis_disponiveis': imoveis.filter(status='disponivel').count(),
+        'imoveis_alugados': imoveis.filter(status='alugado').count(),
+        'imoveis_indisponiveis': imoveis.filter(status='indisponivel').count(),
+        'locacoes_ativas': Locacao.objects.filter(status='ativa').count(),
+        'ocorrencias_pendentes': Ocorrencia.objects.filter(resolvida=False).count(),
+    }
+    return render(request, 'imobiliaria/index.html', contexto)
 
 
 @login_required

@@ -3,9 +3,15 @@
 {% block title %}Início | Imobiliária{% endblock %}
 
 {% block conteudo %}
-    <h1>Sistema de Aluguel de Imóveis</h1>
-    <p>
-        Bem-vindo ao sistema de gestão da imobiliária. Aqui serão controlados os
-        imóveis, clientes e locações da empresa.
-    </p>
+    <div class="pagina-cabecalho">
+        <h1>Painel</h1>
+    </div>
+
+    <div class="indicadores">
+        {% include 'imobiliaria/_partials/_indicador.html' with rotulo='Imóveis disponíveis' valor=imoveis_disponiveis %}
+        {% include 'imobiliaria/_partials/_indicador.html' with rotulo='Imóveis alugados' valor=imoveis_alugados %}
+        {% include 'imobiliaria/_partials/_indicador.html' with rotulo='Imóveis indisponíveis' valor=imoveis_indisponiveis %}
+        {% include 'imobiliaria/_partials/_indicador.html' with rotulo='Locações ativas' valor=locacoes_ativas %}
+        {% include 'imobiliaria/_partials/_indicador.html' with rotulo='Ocorrências pendentes' valor=ocorrencias_pendentes %}
+    </div>
 {% endblock %}

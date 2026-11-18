@@ -362,3 +362,34 @@ body {
     font-size: 1.4rem;
     font-weight: bold;
 }
+
+.indicadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.indicador {
+    padding: 12px 20px;
+    min-width: 160px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.indicador__rotulo {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.indicador__valor {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav-bar__separador {
+    width: 1px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
