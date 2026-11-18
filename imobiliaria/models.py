@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class Funcionario(models.Model):
@@ -84,6 +85,7 @@ class Locacao(models.Model):
     data_fim_prevista = models.DateField()
     data_fim_real = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativa')
+    motivo_cancelamento = models.CharField(max_length=255, blank=True)
     criada_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -91,3 +93,29 @@ class Locacao(models.Model):
 
     def __str__(self):
         return f'{self.cliente} - {self.imovel} ({self.data_inicio} a {self.data_fim_prevista})'
+
+    @property
+    def pode_finalizar(self):
+        return self.status == 'ativa'
+
+    @property
+    def pode_cancelar(self):
+        return self.status == 'ativa' and self.data_inicio > timezone.now().date()
+
+    def finalizar(self):
+        if not self.pode_finalizar:
+            return
+        self.data_fim_real = timezone.now().date()
+        self.status = 'finalizada'
+        self.save()
+        self.imovel.status = 'disponivel'
+        self.imovel.save()
+
+    def cancelar(self, motivo):
+        if not self.pode_cancelar:
+            return
+        self.status = 'cancelada'
+        self.motivo_cancelamento = motivo
+        self.save()
+        self.imovel.status = 'disponivel'
+        self.imovel.save()
