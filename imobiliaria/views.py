@@ -378,7 +378,7 @@ def ocorrencia_nova(request):
 def ocorrencia_resolver(request, id):
     ocorrencia = get_object_or_404(Ocorrencia, pk=id)
     if request.method == 'POST':
-        ocorrencia.resolver()
+        ocorrencia.resolver(request.user)
         messages.success(request, 'Ocorrência marcada como resolvida.')
     return redirect('imobiliaria:ocorrencia_lista')
 

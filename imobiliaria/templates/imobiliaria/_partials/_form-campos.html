@@ -1,5 +1,5 @@
 {% if form.non_field_errors %}
-    <ul>
+    <ul class="formulario__erros">
         {% for erro in form.non_field_errors %}
             <li>{{ erro }}</li>
         {% endfor %}
@@ -13,7 +13,7 @@
             <span class="helptext">{{ campo.help_text }}</span>
         {% endif %}
         {% if campo.errors %}
-            <ul>
+            <ul class="formulario__erros">
                 {% for erro in campo.errors %}
                     <li>{{ erro }}</li>
                 {% endfor %}

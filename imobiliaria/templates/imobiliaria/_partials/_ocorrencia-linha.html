@@ -5,11 +5,13 @@
     <td>{{ ocorrencia.registrada_em }}</td>
     <td>
         {% if ocorrencia.resolvida %}
-            Resolvida em {{ ocorrencia.resolvida_em }}
+            <span class="etiqueta etiqueta--ok">Resolvida</span>
         {% else %}
-            Pendente
+            <span class="etiqueta etiqueta--atencao">Pendente</span>
         {% endif %}
     </td>
+    <td>{{ ocorrencia.resolvida_em|default:'—' }}</td>
+    <td>{{ ocorrencia.nome_resolvida_por|default:'—' }}</td>
     <td class="tabela__acoes">
         {% if not ocorrencia.resolvida %}
             <form method="post" action="{% url 'imobiliaria:ocorrencia_resolver' ocorrencia.id %}">

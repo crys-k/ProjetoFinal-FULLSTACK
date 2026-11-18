@@ -6,4 +6,5 @@
     <td>{{ locacao.data_fim_prevista }}</td>
     <td>{{ locacao.get_status_display }}</td>
     <td>{{ locacao.imovel.valor_aluguel }}</td>
+    <td>{{ locacao.imovel.ocorrencias_pendentes|default:'—' }}</td>
 </tr>

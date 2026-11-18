@@ -13,7 +13,7 @@
         {% endif %}
     </div>
     <div class="nav-bar__usuario">
-        <span class="nav-bar__saudacao">Bem-vindo, {{ user.first_name }}</span>
+        <span class="nav-bar__saudacao">Bem-vindo, {{ user.get_full_name|default:user.username }}</span>
         <a href="{% url 'imobiliaria:logout' %}" class="nav-bar__link">Sair</a>
     </div>
 </nav>

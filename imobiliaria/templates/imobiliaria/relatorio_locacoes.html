@@ -46,6 +46,7 @@
                 <th>Fim previsto</th>
                 <th>Status</th>
                 <th>Valor aluguel</th>
+                <th>Ocorrências pendentes</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +54,7 @@
                 {% include 'imobiliaria/_partials/_relatorio-linha.html' %}
             {% empty %}
                 <tr>
-                    <td colspan="7">Nenhuma locação encontrada para os filtros selecionados.</td>
+                    <td colspan="8">Nenhuma locação encontrada para os filtros selecionados.</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -149,6 +149,13 @@ class Ocorrencia(models.Model):
     resolvida = models.BooleanField(default=False)
     registrada_em = models.DateTimeField(auto_now_add=True)
     resolvida_em = models.DateTimeField(null=True, blank=True)
+    resolvida_por = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name='ocorrencias_resolvidas',
+    )
 
     class Meta:
         ordering = ['-registrada_em']
@@ -156,7 +163,13 @@ class Ocorrencia(models.Model):
     def __str__(self):
         return f'{self.imovel} - {self.descricao[:50]}'
 
-    def resolver(self):
+    def nome_resolvida_por(self):
+        if not self.resolvida_por:
+            return ''
+        return self.resolvida_por.get_full_name() or self.resolvida_por.username
+
+    def resolver(self, usuario):
         self.resolvida = True
         self.resolvida_em = timezone.now()
+        self.resolvida_por = usuario
         self.save()

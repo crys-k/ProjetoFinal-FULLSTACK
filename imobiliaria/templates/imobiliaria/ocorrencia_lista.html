@@ -5,7 +5,7 @@
 {% block conteudo %}
     <div class="pagina-cabecalho">
         <h1>Ocorrências</h1>
-        <a href="{% url 'imobiliaria:ocorrencia_nova' %}" class="botao">Nova ocorrência</a>
+        <a href="{% url 'imobiliaria:ocorrencia_nova' %}" class="botao botao--sucesso">Nova ocorrência</a>
     </div>
 
     <form method="get" class="filtro-imoveis">
@@ -31,6 +31,8 @@
                 <th>Funcionário</th>
                 <th>Registrada em</th>
                 <th>Status</th>
+                <th>Resolvida em</th>
+                <th>Resolvida por</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -39,7 +41,7 @@
                 {% include 'imobiliaria/_partials/_ocorrencia-linha.html' %}
             {% empty %}
                 <tr>
-                    <td colspan="6">Nenhuma ocorrência encontrada.</td>
+                    <td colspan="8">Nenhuma ocorrência encontrada.</td>
                 </tr>
             {% endfor %}
         </tbody>
