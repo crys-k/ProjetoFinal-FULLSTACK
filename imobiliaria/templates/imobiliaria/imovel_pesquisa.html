@@ -1,0 +1,19 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Pesquisar Imóveis | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>Pesquisar Imóveis Disponíveis</h1>
+    </div>
+
+    {% include 'imobiliaria/_partials/_filtro-imoveis.html' %}
+
+    <div class="imoveis-grade">
+        {% for imovel in imoveis %}
+            {% include 'imobiliaria/_partials/_imovel-card.html' %}
+        {% empty %}
+            <p>Nenhum imóvel disponível para os critérios informados.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

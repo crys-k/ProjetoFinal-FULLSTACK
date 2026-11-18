@@ -7,7 +7,9 @@
     {% endif %}
 
     <div class="imovel-card__corpo">
-        <h2 class="imovel-card__endereco">{{ imovel.endereco }}</h2>
+        <h2 class="imovel-card__endereco">
+            <a href="{% url 'imobiliaria:imovel_detalhe' imovel.id %}">{{ imovel.endereco }}</a>
+        </h2>
         <p class="imovel-card__tipo">{{ imovel.get_tipo_display }}</p>
         <ul class="imovel-card__caracteristicas">
             <li>{{ imovel.quartos }} quarto{{ imovel.quartos|pluralize }}</li>

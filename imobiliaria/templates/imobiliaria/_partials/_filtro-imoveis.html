@@ -1,0 +1,12 @@
+<form method="get" class="filtro-imoveis">
+    <input type="text" name="endereco" placeholder="Endereço" value="{{ form.endereco.value|default_if_none:'' }}">
+    <select name="tipo">
+        {% for valor, rotulo in form.fields.tipo.choices %}
+            <option value="{{ valor }}" {% if valor == form.tipo.value %}selected{% endif %}>{{ rotulo }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" name="quartos_min" placeholder="Quartos (mín.)" value="{{ form.quartos_min.value|default_if_none:'' }}">
+    <input type="number" name="valor_min" placeholder="Valor mín. (R$)" step="0.01" value="{{ form.valor_min.value|default_if_none:'' }}">
+    <input type="number" name="valor_max" placeholder="Valor máx. (R$)" step="0.01" value="{{ form.valor_max.value|default_if_none:'' }}">
+    <button type="submit" class="botao botao--secundario">Pesquisar</button>
+</form>

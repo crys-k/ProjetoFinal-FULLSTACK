@@ -1,0 +1,48 @@
+{% extends 'imobiliaria/base.html' %}
+{% load static %}
+
+{% block title %}{{ imovel.endereco }} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>{{ imovel.endereco }}</h1>
+        <a href="{% url 'imobiliaria:imovel_pesquisa' %}" class="botao botao--secundario">Voltar à pesquisa</a>
+    </div>
+
+    <div class="imovel-detalhe">
+        {% if imovel.foto %}
+            <img src="{% static 'imobiliaria/img/imoveis/' %}{{ imovel.foto }}" alt="{{ imovel.endereco }}" class="imovel-detalhe__foto">
+        {% else %}
+            <div class="imovel-detalhe__foto imovel-detalhe__foto--placeholder"></div>
+        {% endif %}
+
+        <dl class="imovel-detalhe__info">
+            <div>
+                <dt>Tipo</dt>
+                <dd>{{ imovel.get_tipo_display }}</dd>
+            </div>
+            <div>
+                <dt>Quartos</dt>
+                <dd>{{ imovel.quartos }}</dd>
+            </div>
+            <div>
+                <dt>Metragem</dt>
+                <dd>{{ imovel.metragem }} m²</dd>
+            </div>
+            <div>
+                <dt>Valor do aluguel</dt>
+                <dd>R$ {{ imovel.valor_aluguel }}/mês</dd>
+            </div>
+            <div>
+                <dt>Status</dt>
+                <dd><span class="imovel-card__status imovel-card__status--{{ imovel.status }}">{{ imovel.get_status_display }}</span></dd>
+            </div>
+            {% if imovel.status == 'indisponivel' and imovel.motivo_bloqueio %}
+                <div>
+                    <dt>Motivo do bloqueio</dt>
+                    <dd>{{ imovel.motivo_bloqueio }}</dd>
+                </div>
+            {% endif %}
+        </dl>
+    </div>
+{% endblock %}
