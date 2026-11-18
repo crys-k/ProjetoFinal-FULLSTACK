@@ -43,6 +43,7 @@ class Imovel(models.Model):
     valor_aluguel = models.DecimalField(max_digits=10, decimal_places=2)
     foto = models.CharField(max_length=255, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='disponivel')
+    motivo_bloqueio = models.CharField(max_length=255, blank=True)
     ativo = models.BooleanField(default=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
@@ -51,6 +52,22 @@ class Imovel(models.Model):
 
     def __str__(self):
         return f'{self.endereco} ({self.get_tipo_display()})'
+
+    @property
+    def pode_bloquear(self):
+        return not self.locacao_set.filter(status='ativa').exists()
+
+    def bloquear(self, motivo):
+        if not self.pode_bloquear:
+            return
+        self.status = 'indisponivel'
+        self.motivo_bloqueio = motivo
+        self.save()
+
+    def desbloquear(self):
+        self.status = 'disponivel'
+        self.motivo_bloqueio = ''
+        self.save()
 
 
 class Cliente(models.Model):
