@@ -1,6 +1,7 @@
 <nav class="nav-bar">
     <div class="nav-bar__principal">
         <a href="{% url 'imobiliaria:index' %}" class="nav-bar__marca">Imobiliária</a>
+        <a href="{% url 'imobiliaria:imovel_lista' %}" class="nav-bar__link">Imóveis</a>
         {% if user.is_staff %}
             <a href="{% url 'imobiliaria:funcionario_lista' %}" class="nav-bar__link">Funcionários</a>
         {% endif %}

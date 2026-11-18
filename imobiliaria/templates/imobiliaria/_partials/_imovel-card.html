@@ -1,0 +1,27 @@
+{% load static %}
+<div class="imovel-card">
+    {% if imovel.foto %}
+        <img src="{% static 'imobiliaria/img/imoveis/' %}{{ imovel.foto }}" alt="{{ imovel.endereco }}" class="imovel-card__foto">
+    {% else %}
+        <div class="imovel-card__foto imovel-card__foto--placeholder"></div>
+    {% endif %}
+
+    <div class="imovel-card__corpo">
+        <h2 class="imovel-card__endereco">{{ imovel.endereco }}</h2>
+        <p class="imovel-card__tipo">{{ imovel.get_tipo_display }}</p>
+        <ul class="imovel-card__caracteristicas">
+            <li>{{ imovel.quartos }} quarto{{ imovel.quartos|pluralize }}</li>
+            <li>{{ imovel.metragem }} m²</li>
+            <li>R$ {{ imovel.valor_aluguel }}/mês</li>
+        </ul>
+        <span class="imovel-card__status imovel-card__status--{{ imovel.status }}">{{ imovel.get_status_display }}</span>
+    </div>
+
+    <div class="imovel-card__acoes">
+        <a href="{% url 'imobiliaria:imovel_editar' imovel.id %}" class="botao botao--secundario">Editar</a>
+        <form method="post" action="{% url 'imobiliaria:imovel_excluir' imovel.id %}" class="imovel-card__form-acao">
+            {% csrf_token %}
+            <button type="submit" class="botao botao--perigo">Excluir</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}{% if imovel %}Editar imóvel{% else %}Novo imóvel{% endif %} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <h1>{% if imovel %}Editar imóvel{% else %}Novo imóvel{% endif %}</h1>
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="botao">Salvar</button>
+    </form>
+{% endblock %}
