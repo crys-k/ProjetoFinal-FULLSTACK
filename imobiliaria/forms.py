@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.safestring import mark_safe
 
-from .models import Funcionario
+from .models import Funcionario, Imovel
 
 
 class UsuarioForm(UserCreationForm):
@@ -28,3 +28,15 @@ class FuncionarioForm(forms.ModelForm):
     class Meta:
         model = Funcionario
         fields = ['cargo', 'telefone']
+
+
+class ImovelForm(forms.ModelForm):
+    class Meta:
+        model = Imovel
+        fields = ['endereco', 'tipo', 'quartos', 'metragem', 'valor_aluguel', 'foto']
+
+    def clean_valor_aluguel(self):
+        valor_aluguel = self.cleaned_data['valor_aluguel']
+        if valor_aluguel <= 0:
+            raise forms.ValidationError('O valor do aluguel deve ser maior que zero.')
+        return valor_aluguel

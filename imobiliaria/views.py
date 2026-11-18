@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import FuncionarioForm, UsuarioForm
-from .models import Funcionario
+from .forms import FuncionarioForm, ImovelForm, UsuarioForm
+from .models import Funcionario, Imovel
 
 
 def login_view(request):
@@ -91,3 +91,60 @@ def funcionario_desativar(request, id):
         funcionario.save()
         messages.success(request, 'Funcionário desativado com sucesso.')
     return redirect('imobiliaria:funcionario_lista')
+
+
+@login_required
+def imovel_lista(request):
+    imoveis = Imovel.objects.filter(ativo=True)
+    status = request.GET.get('status')
+    tipo = request.GET.get('tipo')
+    if status:
+        imoveis = imoveis.filter(status=status)
+    if tipo:
+        imoveis = imoveis.filter(tipo=tipo)
+    contexto = {
+        'imoveis': imoveis,
+        'status_opcoes': Imovel.STATUS_CHOICES,
+        'tipo_opcoes': Imovel.TIPO_CHOICES,
+        'status_selecionado': status,
+        'tipo_selecionado': tipo,
+    }
+    return render(request, 'imobiliaria/imovel_lista.html', contexto)
+
+
+@login_required
+def imovel_novo(request):
+    if request.method == 'POST':
+        form = ImovelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Imóvel cadastrado com sucesso.')
+            return redirect('imobiliaria:imovel_lista')
+    else:
+        form = ImovelForm()
+    return render(request, 'imobiliaria/imovel_form.html', {'form': form})
+
+
+@login_required
+def imovel_editar(request, id):
+    imovel = get_object_or_404(Imovel, pk=id)
+    if request.method == 'POST':
+        form = ImovelForm(request.POST, instance=imovel)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Imóvel atualizado com sucesso.')
+            return redirect('imobiliaria:imovel_lista')
+    else:
+        form = ImovelForm(instance=imovel)
+    return render(request, 'imobiliaria/imovel_form.html', {'form': form, 'imovel': imovel})
+
+
+@login_required
+def imovel_excluir(request, id):
+    imovel = get_object_or_404(Imovel, pk=id)
+    if request.method == 'POST':
+        # TODO (Fase 6): recusar e avisar via messages.error se houver Locacao ativa.
+        imovel.ativo = False
+        imovel.save()
+        messages.success(request, 'Imóvel excluído com sucesso.')
+    return redirect('imobiliaria:imovel_lista')
