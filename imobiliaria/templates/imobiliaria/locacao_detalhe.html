@@ -1,0 +1,28 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Locação #{{ locacao.id }} | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <h1>Locação #{{ locacao.id }}</h1>
+
+    <dl>
+        <dt>Cliente</dt>
+        <dd><a href="{% url 'imobiliaria:cliente_detalhe' locacao.cliente.id %}">{{ locacao.cliente.nome }}</a></dd>
+        <dt>Imóvel</dt>
+        <dd>{{ locacao.imovel.endereco }}</dd>
+        <dt>Funcionário responsável</dt>
+        <dd>{{ locacao.funcionario|default:'—' }}</dd>
+        <dt>Data de início</dt>
+        <dd>{{ locacao.data_inicio }}</dd>
+        <dt>Data de fim prevista</dt>
+        <dd>{{ locacao.data_fim_prevista }}</dd>
+        <dt>Data de fim real</dt>
+        <dd>{{ locacao.data_fim_real|default:'—' }}</dd>
+        <dt>Status</dt>
+        <dd>{{ locacao.get_status_display }}</dd>
+        <dt>Criada em</dt>
+        <dd>{{ locacao.criada_em }}</dd>
+    </dl>
+
+    <a href="{% url 'imobiliaria:locacao_lista' %}" class="botao botao--secundario">Voltar</a>
+{% endblock %}

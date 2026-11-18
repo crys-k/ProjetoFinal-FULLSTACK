@@ -19,5 +19,28 @@
         <dd>{{ cliente.data_cadastro }}</dd>
     </dl>
 
+    <h2>Histórico de locações</h2>
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Imóvel</th>
+                <th>Início</th>
+                <th>Fim previsto</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for locacao in locacoes %}
+                {% include 'imobiliaria/_partials/_locacao-linha.html' %}
+            {% empty %}
+                <tr>
+                    <td colspan="6">Nenhuma locação registrada para este cliente.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <a href="{% url 'imobiliaria:cliente_lista' %}" class="botao botao--secundario">Voltar</a>
 {% endblock %}

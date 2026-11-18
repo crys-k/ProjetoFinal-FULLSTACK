@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ClienteForm, FuncionarioForm, ImovelForm, UsuarioForm
-from .models import Cliente, Funcionario, Imovel
+from .forms import ClienteForm, FuncionarioForm, ImovelForm, LocacaoForm, UsuarioForm
+from .models import Cliente, Funcionario, Imovel, Locacao
 
 
 def login_view(request):
@@ -191,4 +191,45 @@ def cliente_editar(request, id):
 @login_required
 def cliente_detalhe(request, id):
     cliente = get_object_or_404(Cliente, pk=id)
-    return render(request, 'imobiliaria/cliente_detalhe.html', {'cliente': cliente})
+    locacoes = Locacao.objects.filter(cliente=cliente)
+    return render(request, 'imobiliaria/cliente_detalhe.html', {'cliente': cliente, 'locacoes': locacoes})
+
+
+@login_required
+def locacao_lista(request):
+    locacoes = Locacao.objects.all()
+    status = request.GET.get('status')
+    if status:
+        locacoes = locacoes.filter(status=status)
+    contexto = {
+        'locacoes': locacoes,
+        'status_opcoes': Locacao.STATUS_CHOICES,
+        'status_selecionado': status,
+    }
+    return render(request, 'imobiliaria/locacao_lista.html', contexto)
+
+
+@login_required
+def locacao_nova(request):
+    busca = request.GET.get('busca')
+    imoveis_disponiveis = Imovel.objects.filter(status='disponivel', ativo=True)
+    if request.method == 'POST':
+        form = LocacaoForm(request.POST)
+        if form.is_valid():
+            locacao = form.save(commit=False)
+            locacao.funcionario = Funcionario.objects.filter(usuario=request.user).first()
+            locacao.save()
+            locacao.imovel.status = 'alugado'
+            locacao.imovel.save()
+            messages.success(request, 'Locação criada com sucesso.')
+            return redirect('imobiliaria:locacao_detalhe', id=locacao.id)
+    else:
+        form = LocacaoForm(busca=busca)
+    contexto = {'form': form, 'busca': busca, 'imoveis_disponiveis': imoveis_disponiveis}
+    return render(request, 'imobiliaria/locacao_form.html', contexto)
+
+
+@login_required
+def locacao_detalhe(request, id):
+    locacao = get_object_or_404(Locacao, pk=id)
+    return render(request, 'imobiliaria/locacao_detalhe.html', {'locacao': locacao})

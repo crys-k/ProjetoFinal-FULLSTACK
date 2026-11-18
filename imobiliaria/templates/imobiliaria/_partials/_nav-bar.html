@@ -3,6 +3,7 @@
         <a href="{% url 'imobiliaria:index' %}" class="nav-bar__marca">Imobiliária</a>
         <a href="{% url 'imobiliaria:imovel_lista' %}" class="nav-bar__link">Imóveis</a>
         <a href="{% url 'imobiliaria:cliente_lista' %}" class="nav-bar__link">Clientes</a>
+        <a href="{% url 'imobiliaria:locacao_lista' %}" class="nav-bar__link">Locações</a>
         {% if user.is_staff %}
             <a href="{% url 'imobiliaria:funcionario_lista' %}" class="nav-bar__link">Funcionários</a>
         {% endif %}
