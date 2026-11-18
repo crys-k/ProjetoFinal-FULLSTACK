@@ -1,0 +1,13 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Nova ocorrência | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <h1>Nova ocorrência</h1>
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+        {% include 'imobiliaria/_partials/_form-campos.html' with form=form %}
+        <button type="submit" class="botao">Registrar</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+<tr class="tabela__linha">
+    <td>{{ ocorrencia.imovel.endereco }}</td>
+    <td>{{ ocorrencia.descricao }}</td>
+    <td>{{ ocorrencia.funcionario|default:'—' }}</td>
+    <td>{{ ocorrencia.registrada_em }}</td>
+    <td>
+        {% if ocorrencia.resolvida %}
+            Resolvida em {{ ocorrencia.resolvida_em }}
+        {% else %}
+            Pendente
+        {% endif %}
+    </td>
+    <td class="tabela__acoes">
+        {% if not ocorrencia.resolvida %}
+            <form method="post" action="{% url 'imobiliaria:ocorrencia_resolver' ocorrencia.id %}">
+                {% csrf_token %}
+                <button type="submit" class="botao botao--secundario">Resolver</button>
+            </form>
+        {% endif %}
+    </td>
+</tr>

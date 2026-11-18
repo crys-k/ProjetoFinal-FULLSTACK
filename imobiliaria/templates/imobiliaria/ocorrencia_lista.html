@@ -1,0 +1,47 @@
+{% extends 'imobiliaria/base.html' %}
+
+{% block title %}Ocorrências | Imobiliária{% endblock %}
+
+{% block conteudo %}
+    <div class="pagina-cabecalho">
+        <h1>Ocorrências</h1>
+        <a href="{% url 'imobiliaria:ocorrencia_nova' %}" class="botao">Nova ocorrência</a>
+    </div>
+
+    <form method="get" class="filtro-imoveis">
+        <select name="imovel">
+            <option value="">Todos os imóveis</option>
+            {% for imovel in imoveis %}
+                <option value="{{ imovel.id }}" {% if imovel.id|stringformat:'s' == imovel_selecionado %}selected{% endif %}>{{ imovel.endereco }}</option>
+            {% endfor %}
+        </select>
+        <select name="status">
+            <option value="">Todos os status</option>
+            <option value="pendente" {% if status_selecionado == 'pendente' %}selected{% endif %}>Pendente</option>
+            <option value="resolvida" {% if status_selecionado == 'resolvida' %}selected{% endif %}>Resolvida</option>
+        </select>
+        <button type="submit" class="botao botao--secundario">Filtrar</button>
+    </form>
+
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>Imóvel</th>
+                <th>Descrição</th>
+                <th>Funcionário</th>
+                <th>Registrada em</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ocorrencia in ocorrencias %}
+                {% include 'imobiliaria/_partials/_ocorrencia-linha.html' %}
+            {% empty %}
+                <tr>
+                    <td colspan="6">Nenhuma ocorrência encontrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

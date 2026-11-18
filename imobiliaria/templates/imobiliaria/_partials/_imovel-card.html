@@ -18,6 +18,11 @@
         {% if imovel.status == 'indisponivel' and imovel.motivo_bloqueio %}
             <p class="imovel-card__motivo-bloqueio">Motivo: {{ imovel.motivo_bloqueio }}</p>
         {% endif %}
+        {% if imovel.ocorrencias_pendentes %}
+            <p class="imovel-card__ocorrencias">
+                {{ imovel.ocorrencias_pendentes }} ocorrência{{ imovel.ocorrencias_pendentes|pluralize }} pendente{{ imovel.ocorrencias_pendentes|pluralize }}
+            </p>
+        {% endif %}
     </div>
 
     <div class="imovel-card__acoes">
