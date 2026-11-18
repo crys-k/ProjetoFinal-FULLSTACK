@@ -152,6 +152,34 @@ def imovel_excluir(request, id):
 
 
 @login_required
+def imovel_bloquear(request, id):
+    if not request.user.is_staff:
+        messages.error(request, 'Acesso restrito ao administrador.')
+        return redirect('imobiliaria:index')
+    imovel = get_object_or_404(Imovel, pk=id)
+    if request.method == 'POST':
+        if not imovel.pode_bloquear:
+            messages.error(request, 'Imóvel alugado não pode ser bloqueado.')
+        else:
+            motivo = request.POST.get('motivo_bloqueio', '')
+            imovel.bloquear(motivo)
+            messages.success(request, 'Imóvel bloqueado com sucesso.')
+    return redirect('imobiliaria:imovel_lista')
+
+
+@login_required
+def imovel_desbloquear(request, id):
+    if not request.user.is_staff:
+        messages.error(request, 'Acesso restrito ao administrador.')
+        return redirect('imobiliaria:index')
+    imovel = get_object_or_404(Imovel, pk=id)
+    if request.method == 'POST':
+        imovel.desbloquear()
+        messages.success(request, 'Imóvel desbloqueado com sucesso.')
+    return redirect('imobiliaria:imovel_lista')
+
+
+@login_required
 def cliente_lista(request):
     clientes = Cliente.objects.all()
     busca = request.GET.get('busca')

@@ -15,6 +15,9 @@
             <li>R$ {{ imovel.valor_aluguel }}/mês</li>
         </ul>
         <span class="imovel-card__status imovel-card__status--{{ imovel.status }}">{{ imovel.get_status_display }}</span>
+        {% if imovel.status == 'indisponivel' and imovel.motivo_bloqueio %}
+            <p class="imovel-card__motivo-bloqueio">Motivo: {{ imovel.motivo_bloqueio }}</p>
+        {% endif %}
     </div>
 
     <div class="imovel-card__acoes">
@@ -23,5 +26,19 @@
             {% csrf_token %}
             <button type="submit" class="botao botao--perigo">Excluir</button>
         </form>
+        {% if user.is_staff %}
+            {% if imovel.status == 'disponivel' %}
+                <form method="post" action="{% url 'imobiliaria:imovel_bloquear' imovel.id %}" class="imovel-card__form-acao">
+                    {% csrf_token %}
+                    <input type="text" name="motivo_bloqueio" placeholder="Motivo do bloqueio" required>
+                    <button type="submit" class="botao botao--secundario">Bloquear</button>
+                </form>
+            {% elif imovel.status == 'indisponivel' %}
+                <form method="post" action="{% url 'imobiliaria:imovel_desbloquear' imovel.id %}" class="imovel-card__form-acao">
+                    {% csrf_token %}
+                    <button type="submit" class="botao botao--secundario">Desbloquear</button>
+                </form>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
